@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Михаил Белов](https://up.htmlacademy.ru/ecmascript/11/user/914819).
-* Наставник: `Неизвестно`.
+* Наставник: `None`.
 
 ---
 
