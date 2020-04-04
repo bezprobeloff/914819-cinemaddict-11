@@ -35,7 +35,7 @@ const createSectionFilmsTemplate = () => {
   return (
     `<section class="films"/>`
   );
-}
+};
 
 const createFilmsListTemplate = () => {
   return (
@@ -47,7 +47,7 @@ const createFilmsListTemplate = () => {
 
     </section>`
   );
-}
+};
 
 const createFilmsListExtraTemplate = () => {
   return (
@@ -58,8 +58,7 @@ const createFilmsListExtraTemplate = () => {
       </div>
     </section>`
   );
-}
-
+};
 
 const createCardFilmTemplate = () => {
   return (
@@ -261,7 +260,7 @@ const createFilmDetailsTemplate = () => {
       </form>
     </section>`
   );
-}
+};
 
 const FILMS_COUNT = 5;
 const FILMS_EXTRA_COUNT = 2;
@@ -299,7 +298,7 @@ for (let i = 0; i < FILMS_LIST_EXTRA_COUNT; i++) {
   const filmsListExtraElement = sectionFilmsElement.querySelectorAll(`.films-list--extra`).item(i);
   const filmsListExtraContainerElement = filmsListExtraElement.querySelector(`.films-list__container`);
 
-  for (let i = 0; i < FILMS_EXTRA_COUNT; i++) {
+  for (let j = 0; j < FILMS_EXTRA_COUNT; j++) {
     render(filmsListExtraContainerElement, createCardFilmTemplate(), `beforeend`);
   }
 }
