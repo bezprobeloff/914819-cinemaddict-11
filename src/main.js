@@ -1,17 +1,3 @@
-//Звание пользователя;
-
-//Меню (фильтры и статистика);
-
-//Карточка фильма;
-
-//Кнопка «Show more»;
-
-//Карточки фильма в блоках «Top rated» и «Most commented» (доп.задание);
-
-//Подробная информация о фильме (попап).
-
-"use strict";
-
 const createProfileTemplate = () => {
   return (
     `<section class="header__profile profile">
@@ -19,7 +5,7 @@ const createProfileTemplate = () => {
       <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
     </section>`
   );
-}
+};
 
 const createMainNavigationTemplate = () => {
   return (
