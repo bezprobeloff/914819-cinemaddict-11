@@ -1,4 +1,11 @@
 const createDetailsMarkup = (term, cell) => {
+  if (term === `Genre` && cell.length > 1) {
+    term = `Genres`;
+    cell = cell
+      .slice()
+      .map((item) => `<span class="film-details__genre">${item}</span>`)
+      .join(`\n`);
+  }
   return (
     `
     <tr class="film-details__row">
@@ -11,7 +18,7 @@ const createDetailsMarkup = (term, cell) => {
 
 
 export const createFilmDetailsTemplate = (film) => {
-  const {title, rate, year, duration, genre, poster, description,
+  const {title, rate, year, duration, genres, poster, description,
     ageRate, titleOriginal, director, writers, actors,
     releaseDate, country} = film;
   return (
@@ -47,13 +54,7 @@ export const createFilmDetailsTemplate = (film) => {
                 ${createDetailsMarkup(`Release Date`, releaseDate)}
                 ${createDetailsMarkup(`Runtime`, duration)}
                 ${createDetailsMarkup(`Country`, country)}
-                <tr class="film-details__row">
-                  <td class="film-details__term">Genres</td>
-                  <td class="film-details__cell">
-                    <span class="film-details__genre">Drama</span>
-                    <span class="film-details__genre">Film-Noir</span>
-                    <span class="film-details__genre">Mystery</span></td>
-                </tr>
+                ${createDetailsMarkup(`Genre`, genres)}
               </table>
 
               <p class="film-details__film-description">

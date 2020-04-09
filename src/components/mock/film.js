@@ -86,7 +86,7 @@ const generateFilm = () =>  {
     rate: getRandomNumber(0, 10),
     year: getElement(Years),
     duration: getElement(Durations),
-    genre: getElement(Genres),
+    genres: getGenerateArrElements(Genres),
     poster: getElement(Posters),
     description: getElement(Descriptions),
     ageRate: getRandomNumber(0, 18),
@@ -96,8 +96,6 @@ const generateFilm = () =>  {
     actors: getGenerateArrElements(Persons).join(`, `),
     releaseDate: getElement(ReleaseDate),
     country: getElement(Country),
-
-
 
   };
 };

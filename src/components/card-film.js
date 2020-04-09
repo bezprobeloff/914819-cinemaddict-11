@@ -1,5 +1,5 @@
 export const createCardFilmTemplate = (film) => {
-  const {title, rate, year, duration, genre, poster, description} = film;
+  const {title, rate, year, duration, genres, poster, description} = film;
   return (
     `<article class="film-card">
       <h3 class="film-card__title">${title}</h3>
@@ -7,7 +7,7 @@ export const createCardFilmTemplate = (film) => {
       <p class="film-card__info">
         <span class="film-card__year">${year}</span>
         <span class="film-card__duration">${duration}</span>
-        <span class="film-card__genre">${genre}</span>
+        <span class="film-card__genre">${genres[0]}</span>
       </p>
       <img src="${poster}" alt="" class="film-card__poster">
       <p class="film-card__description">${description}</p>
