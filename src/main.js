@@ -7,10 +7,15 @@ import {createMainNavigationTemplate} from "./components/main-navigate";
 import {createProfileTemplate} from "./components/profile";
 import {createSectionFilmsTemplate} from "./components/section-films";
 import {createSortFilmsTemplate} from "./components/sort-films";
+import {generateFilms, generateFilm} from "./components/mock/film";
 
-const FILMS_COUNT = 5;
+const FILMS_COUNT = 23;
+const SHOWING_FILMS_ON_START_COUNT = 5;
+const SHOWING_FILMS_BY_BUTTON_COUNT = 5;
 const FILMS_EXTRA_COUNT = 2;
 const FILMS_LIST_EXTRA_COUNT = 2;
+
+const films = generateFilms(FILMS_COUNT);
 
 const bodyElement = document.querySelector(`body`);
 const render = (container, template, place) => {
@@ -32,8 +37,8 @@ render(sectionFilmsElement, createFilmsListTemplate(), `beforeend`);
 const filmsListElement = sectionFilmsElement.querySelector(`.films-list`);
 const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
 
-for (let i = 0; i < FILMS_COUNT; i++) {
-  render(filmsListContainerElement, createCardFilmTemplate(), `beforeend`);
+for (let i = 0; i < SHOWING_FILMS_ON_START_COUNT; i++) {
+  render(filmsListContainerElement, createCardFilmTemplate(films[i]), `beforeend`);
 }
 
 render(filmsListElement, createButtonShowMoreTemplate(), `beforeend`);
@@ -45,8 +50,8 @@ for (let i = 0; i < FILMS_LIST_EXTRA_COUNT; i++) {
   const filmsListExtraContainerElement = filmsListExtraElement.querySelector(`.films-list__container`);
 
   for (let j = 0; j < FILMS_EXTRA_COUNT; j++) {
-    render(filmsListExtraContainerElement, createCardFilmTemplate(), `beforeend`);
+    render(filmsListExtraContainerElement, createCardFilmTemplate(films[j]), `beforeend`);
   }
 }
 
-render(bodyElement, createFilmDetailsTemplate(), `beforeend`);
+render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);
