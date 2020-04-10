@@ -1,5 +1,5 @@
 export const createCardFilmTemplate = (film) => {
-  const {title, rate, year, duration, genres, poster, description} = film;
+  const {title, rate, year, duration, genres, poster, description, comments} = film;
   return (
     `<article class="film-card">
       <h3 class="film-card__title">${title}</h3>
@@ -11,7 +11,7 @@ export const createCardFilmTemplate = (film) => {
       </p>
       <img src="${poster}" alt="" class="film-card__poster">
       <p class="film-card__description">${description}</p>
-      <a class="film-card__comments">5 comments</a>
+      <a class="film-card__comments">${comments.length} comments</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
         <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>

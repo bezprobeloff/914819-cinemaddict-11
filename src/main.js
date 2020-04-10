@@ -7,13 +7,15 @@ import {createMainNavigationTemplate} from "./components/main-navigate";
 import {createProfileTemplate} from "./components/profile";
 import {createSectionFilmsTemplate} from "./components/section-films";
 import {createSortFilmsTemplate} from "./components/sort-films";
-import {generateFilms, generateFilm} from "./components/mock/film";
+import {createFooterStatistics} from "./components/footer-statistics";
+import {generateFilms} from "./components/mock/film";
 
 const FILMS_COUNT = 23;
 const SHOWING_FILMS_ON_START_COUNT = 5;
 const SHOWING_FILMS_BY_BUTTON_COUNT = 5;
 const FILMS_EXTRA_COUNT = 2;
 const FILMS_LIST_EXTRA_COUNT = 2;
+const COUNT_WATCHED_FILMS = 13;
 
 const films = generateFilms(FILMS_COUNT);
 
@@ -24,8 +26,9 @@ const render = (container, template, place) => {
 
 const headerElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
+const footerElement = document.querySelector(`.footer__statistics`);
 
-render(headerElement, createProfileTemplate(), `beforeend`);
+render(headerElement, createProfileTemplate(COUNT_WATCHED_FILMS), `beforeend`);
 render(siteMainElement, createMainNavigationTemplate(), `beforeend`);
 render(siteMainElement, createSortFilmsTemplate(), `beforeend`);
 
@@ -37,9 +40,10 @@ render(sectionFilmsElement, createFilmsListTemplate(), `beforeend`);
 const filmsListElement = sectionFilmsElement.querySelector(`.films-list`);
 const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
 
-for (let i = 0; i < SHOWING_FILMS_ON_START_COUNT; i++) {
-  render(filmsListContainerElement, createCardFilmTemplate(films[i]), `beforeend`);
-}
+let showingFilmsCount = SHOWING_FILMS_ON_START_COUNT;
+
+films.slice(0, showingFilmsCount)
+  .forEach((film) => render(filmsListContainerElement, createCardFilmTemplate(film), `beforeend`));
 
 render(filmsListElement, createButtonShowMoreTemplate(), `beforeend`);
 
@@ -54,4 +58,20 @@ for (let i = 0; i < FILMS_LIST_EXTRA_COUNT; i++) {
   }
 }
 
+render(footerElement, createFooterStatistics(films.length), `beforeend`);
+
 render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);
+
+const showMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
+
+showMoreButton.addEventListener(`click`, () => {
+  const prevTasksCount = showingFilmsCount;
+  showingFilmsCount = showingFilmsCount + SHOWING_FILMS_BY_BUTTON_COUNT;
+
+  films.slice(prevTasksCount, showingFilmsCount)
+    .forEach((film) => render(filmsListContainerElement, createCardFilmTemplate(film), `beforeend`));
+
+  if (showingFilmsCount >= films.length) {
+    showMoreButton.remove();
+  }
+});

@@ -88,7 +88,7 @@ const getGenerateArrElements = (arr) => {
 };
 
 const getGenerateArrObjects = (cb) => {
-  return new Array(getRandomNumber(1, 5))
+  return new Array(getRandomNumber(0, 5))
     .fill(``)
     .map(() => cb());
 };
@@ -102,7 +102,7 @@ const generateComments = () => {
   };
 };
 
-const generateFilm = () =>  {
+const generateFilm = () => {
   return {
     title: getElement(Titles),
     rate: getRandomNumber(0, 10),
