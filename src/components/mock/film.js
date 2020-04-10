@@ -66,6 +66,13 @@ const Country = [
   `China`
 ];
 
+const Emojis = [
+  `./images/emoji/smile.png`,
+  `./images/emoji/sleeping.png`,
+  `./images/emoji/puke.png`,
+  `./images/emoji/angry.png`
+];
+
 const getRandomNumber = (min, max) => {
   return min + Math.floor(Math.random() * (max - min));
 };
@@ -78,6 +85,21 @@ const getGenerateArrElements = (arr) => {
   return new Array(getRandomNumber(1, arr.length))
     .fill(``)
     .map(() => getElement(arr));
+};
+
+const getGenerateArrObjects = (cb) => {
+  return new Array(getRandomNumber(1, 5))
+    .fill(``)
+    .map(() => cb());
+};
+
+const generateComments = () => {
+  return {
+    emoji: getElement(Emojis),
+    text: getElement(Descriptions),
+    author: getElement(Persons),
+    day: `2019/12/31 23:59`
+  };
 };
 
 const generateFilm = () =>  {
@@ -96,7 +118,7 @@ const generateFilm = () =>  {
     actors: getGenerateArrElements(Persons).join(`, `),
     releaseDate: getElement(ReleaseDate),
     country: getElement(Country),
-
+    comments: getGenerateArrObjects(generateComments)
   };
 };
 
