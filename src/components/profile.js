@@ -1,4 +1,6 @@
-export const createProfileTemplate = (countWatchedFilm) => {
+import {createElement} from "../utils";
+
+const createProfileTemplate = (countWatchedFilm) => {
   let profileRating = ``;
   if (countWatchedFilm > 0 && countWatchedFilm < 11) {
     profileRating = `novice`;
@@ -14,3 +16,27 @@ export const createProfileTemplate = (countWatchedFilm) => {
     </section>`
   );
 };
+
+export default class Profile {
+  constructor(countWatchedFilm) {
+    this._countWatchedFilm = countWatchedFilm;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createProfileTemplate(this._countWatchedFilm);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate);
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

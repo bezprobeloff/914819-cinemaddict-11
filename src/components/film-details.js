@@ -1,3 +1,5 @@
+import {createElement} from "../utils";
+
 const CONTROLS = [
   `watchlist`,
   `watched`,
@@ -78,7 +80,7 @@ const createEmojiMarkup = (emojiPath) => {
   );
 };
 
-export const createFilmDetailsTemplate = (film) => {
+const createFilmDetailsTemplate = (film) => {
   const {title, rate, year, duration, genres, poster, description,
     ageRate, titleOriginal, director, writers, actors,
     releaseDate, country, comments} = film;
@@ -154,3 +156,27 @@ export const createFilmDetailsTemplate = (film) => {
     </section>`
   );
 };
+
+export default class FilmPopup {
+  constructor(film) {
+    this._film = film;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate);
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

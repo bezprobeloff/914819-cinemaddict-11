@@ -1,14 +1,15 @@
-import {createButtonShowMoreTemplate} from "./components/button-show-more";
-import {createCardFilmTemplate} from "./components/card-film";
-import {createFilmDetailsTemplate} from "./components/film-details";
-import {createFilmsListTemplate} from "./components/film-list";
-import {createFilmsListExtraTemplate} from "./components/film-list-extra";
-import {createMainNavigationTemplate} from "./components/main-navigate";
-import {createProfileTemplate} from "./components/profile";
-import {createSectionFilmsTemplate} from "./components/section-films";
-import {createSortFilmsTemplate} from "./components/sort-films";
-import {createFooterStatistics} from "./components/footer-statistics";
+import ShowMoreButtonComponent from "./components/button-show-more";
+import CardFilmComponent from "./components/card-film";
+import FilmPopupComponent from "./components/film-details";
+import FilmListComponent from "./components/film-list";
+// import {createFilmsListExtraTemplate} from "./components/film-list-extra";
+import MainNavigationComponent from "./components/main-navigate";
+import ProfileComponent from "./components/profile";
+import SectionFilmsComponent from "./components/section-films";
+import SortFilmsComponent from "./components/sort-films";
+import FooterStatsComponent from "./components/footer-statistics";
 import {generateFilms} from "./components/mock/film";
+import {render, RenderPosition} from "./utils.js";
 
 const FILMS_COUNT = 23;
 const SHOWING_FILMS_ON_START_COUNT = 5;
@@ -17,12 +18,15 @@ const FILMS_EXTRA_COUNT = 2;
 const FILMS_LIST_EXTRA_COUNT = 2;
 const COUNT_WATCHED_FILMS = 13;
 
+const renderCardFilm = () => {};
+const renderSectionFilms = () => {};
+
 const films = generateFilms(FILMS_COUNT);
 
 const bodyElement = document.querySelector(`body`);
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
+// const render = (container, template, place) => {
+//   container.insertAdjacentHTML(place, template);
+// };
 
 const headerElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
@@ -61,7 +65,7 @@ for (let i = 0; i < FILMS_LIST_EXTRA_COUNT; i++) {
 
 render(footerElement, createFooterStatistics(films.length), `beforeend`);
 
-render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);
+// render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);
 
 const showMoreButton = filmsListElement.querySelector(`.films-list__show-more`);
 
