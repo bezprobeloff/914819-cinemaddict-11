@@ -74,7 +74,7 @@ const Emojis = [
 ];
 
 const getRandomNumber = (min, max) => {
-  return min + Math.floor(Math.random() * (max - min));
+  return min + Math.round(Math.random() * (max - min));
 };
 
 const getElement = (arr) => {
@@ -118,7 +118,10 @@ const generateFilm = () => {
     actors: getGenerateArrElements(Persons).join(`, `),
     releaseDate: getElement(ReleaseDate),
     country: getElement(Country),
-    comments: getGenerateArrObjects(generateComments)
+    comments: getGenerateArrObjects(generateComments),
+    isWached: getRandomNumber(0, 1),
+    isHistory: getRandomNumber(0, 1),
+    isFavorite: getRandomNumber(0, 1)
   };
 };
 

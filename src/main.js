@@ -29,13 +29,13 @@ const siteMainElement = document.querySelector(`.main`);
 const footerElement = document.querySelector(`.footer__statistics`);
 
 render(headerElement, createProfileTemplate(COUNT_WATCHED_FILMS), `beforeend`);
-render(siteMainElement, createMainNavigationTemplate(), `beforeend`);
+render(siteMainElement, createMainNavigationTemplate(films), `beforeend`);
 render(siteMainElement, createSortFilmsTemplate(), `beforeend`);
 
 render(siteMainElement, createSectionFilmsTemplate(), `beforeend`);
 const sectionFilmsElement = siteMainElement.querySelector(`.films`);
 
-render(sectionFilmsElement, createFilmsListTemplate(), `beforeend`);
+render(sectionFilmsElement, createFilmsListTemplate(`All movies. Upcoming`), `beforeend`);
 
 const filmsListElement = sectionFilmsElement.querySelector(`.films-list`);
 const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
@@ -47,9 +47,10 @@ films.slice(0, showingFilmsCount)
 
 render(filmsListElement, createButtonShowMoreTemplate(), `beforeend`);
 
+render(sectionFilmsElement, createFilmsListTemplate(`Top rated movies`, `extra`), `beforeend`);
+render(sectionFilmsElement, createFilmsListTemplate(`Most commented`, `extra`), `beforeend`);
 
 for (let i = 0; i < FILMS_LIST_EXTRA_COUNT; i++) {
-  render(sectionFilmsElement, createFilmsListExtraTemplate(), `beforeend`);
   const filmsListExtraElement = sectionFilmsElement.querySelectorAll(`.films-list--extra`).item(i);
   const filmsListExtraContainerElement = filmsListExtraElement.querySelector(`.films-list__container`);
 
