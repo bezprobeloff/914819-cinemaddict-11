@@ -19,10 +19,20 @@ const COUNT_WATCHED_FILMS = 13;
 const renderCardFilm = (filmListContainer, film) => {
   const onOpenPopupClick = () => {
     bodyElement.appendChild(popupFilmComponent.getElement());
+    document.addEventListener(`keydown`, onEscKeyDown);
   };
 
-  const onClosePopupButtonClick = () => {
+  const closePopup = () => {
     bodyElement.removeChild(popupFilmComponent.getElement());
+  };
+
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    if (isEscKey) {
+      closePopup();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
   };
   const cardFilmComponent = new CardFilmComponent(film);
   const posterCardFilmElement = cardFilmComponent.getElement().querySelector(`.film-card__poster`);
@@ -34,7 +44,7 @@ const renderCardFilm = (filmListContainer, film) => {
   posterCardFilmElement.addEventListener(`click`, onOpenPopupClick);
   titleCardFilmElement.addEventListener(`click`, onOpenPopupClick);
   commentsCardFilmElement.addEventListener(`click`, onOpenPopupClick);
-  closePopupButton.addEventListener(`click`, onClosePopupButtonClick);
+  closePopupButton.addEventListener(`click`, closePopup);
 
   render(filmListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
 };
