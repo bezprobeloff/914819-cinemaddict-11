@@ -1,4 +1,5 @@
 import ShowMoreButtonComponent from "./components/button-show-more";
+import NoFilmsComponent from "./components/no-films";
 import CardFilmComponent from "./components/card-film";
 import FilmPopupComponent from "./components/film-details";
 import FilmListComponent from "./components/film-list";
@@ -49,11 +50,14 @@ const renderCardFilm = (filmListContainer, film) => {
   render(filmListContainer, cardFilmComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
-const renderSectionFilms = (mainElement, films) => {
-  render(mainElement, new MainNavigationComponent(films).getElement(), RenderPosition.BEFOREEND);
-  render(siteMainElement, new SortFilmsComponent().getElement(), RenderPosition.BEFOREEND);
+const renderSectionFilms = (sectionFilmsComponent, films) => {
+  const isNoFilms = (films.length === 0);
 
-  const sectionFilmsElement = new SectionFilmsComponent().getElement();
+  if (isNoFilms) {
+    render(sectionFilmsComponent.getElement(), new NoFilmsComponent().getElement(), RenderPosition.BEFOREEND);
+    return;
+  }
+
   const filmsListElement = new FilmListComponent(`All movies. Upcoming`, ``).getElement();
   const filmListExtraTopRateElement = new FilmListComponent(`Top rated movies`, `extra`).getElement();
   const filmListExtraMostCommentElement = new FilmListComponent(`Most commented`, `extra`).getElement();
@@ -62,8 +66,7 @@ const renderSectionFilms = (mainElement, films) => {
   const filmsListMostCommentContainerElement = filmListExtraMostCommentElement.querySelector(`.films-list__container`);
   const showMoreButtonElement = new ShowMoreButtonComponent().getElement();
 
-  render(mainElement, sectionFilmsElement, RenderPosition.BEFOREEND);
-  render(sectionFilmsElement, filmsListElement, RenderPosition.BEFOREEND);
+  render(sectionFilmsComponent.getElement(), filmsListElement, RenderPosition.BEFOREEND);
 
   let showingFilmsCount = SHOWING_FILMS_ON_START_COUNT;
 
@@ -83,8 +86,8 @@ const renderSectionFilms = (mainElement, films) => {
     }
   });
 
-  render(sectionFilmsElement, filmListExtraTopRateElement, RenderPosition.BEFOREEND);
-  render(sectionFilmsElement, filmListExtraMostCommentElement, RenderPosition.BEFOREEND);
+  render(sectionFilmsComponent.getElement(), filmListExtraTopRateElement, RenderPosition.BEFOREEND);
+  render(sectionFilmsComponent.getElement(), filmListExtraMostCommentElement, RenderPosition.BEFOREEND);
 
   // генерация карточек для доп блоков
   for (let i = 0; i < FILMS_EXTRA_COUNT; i++) {
@@ -99,14 +102,15 @@ const bodyElement = document.querySelector(`body`);
 const headerElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const footerElement = document.querySelector(`.footer__statistics`);
-
 const profileElement = new ProfileComponent(COUNT_WATCHED_FILMS).getElement();
 const footerStatsElement = new FooterStatsComponent(films.length).getElement();
 
-renderSectionFilms(siteMainElement, films);
+render(siteMainElement, new MainNavigationComponent(films).getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, new SortFilmsComponent().getElement(), RenderPosition.BEFOREEND);
+
+const sectionFilmsComponent = new SectionFilmsComponent();
+render(siteMainElement, sectionFilmsComponent.getElement(), RenderPosition.BEFOREEND);
+renderSectionFilms(sectionFilmsComponent, films);
 
 render(headerElement, profileElement, RenderPosition.BEFOREEND);
 render(footerElement, footerStatsElement, RenderPosition.BEFOREEND);
-
-// render(bodyElement, createFilmDetailsTemplate(films[0]), `beforeend`);
-
