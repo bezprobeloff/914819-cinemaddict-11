@@ -1,4 +1,5 @@
 import {createElement} from "../utils";
+import AbstractComponent from "../components/abstract-component";
 
 const createCardFilmTemplate = (film) => {
   const {title, rate, year, duration, genres, poster, description, comments} = film;

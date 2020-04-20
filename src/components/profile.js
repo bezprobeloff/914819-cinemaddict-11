@@ -1,4 +1,5 @@
 import {createElement} from "../utils";
+import AbstractComponent from "../components/abstract-component";
 
 const createProfileTemplate = (countWatchedFilm) => {
   let profileRating = ``;
