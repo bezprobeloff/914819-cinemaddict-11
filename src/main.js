@@ -19,7 +19,7 @@ const COUNT_WATCHED_FILMS = 13;
 
 const renderCardFilm = (filmListContainer, film) => {
   const onOpenPopupClick = () => {
-    append(bodyElement, popupFilmComponent.getElement());
+    append(bodyElement, popupFilmComponent);
     document.addEventListener(`keydown`, onEscKeyDown);
   };
 

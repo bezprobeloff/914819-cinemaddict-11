@@ -21,8 +21,11 @@ export const render = (container, component, place) => {
   }
 };
 
-export const append = (parent, element) => {
-  parent.appendChild(element);
+export const append = (parent, component) => {
+  const isExistElements = !!(component.getElement());
+  if (isExistElements) {
+    parent.appendChild(component.getElement());
+  }
 };
 
 export const remove = (component) => {
