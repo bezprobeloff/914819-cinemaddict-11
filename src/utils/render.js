@@ -10,13 +10,22 @@ export const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export const render = (container, element, place) => {
+export const render = (container, component, place) => {
   switch (place) {
     case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
+      container.prepend(component.getElement());
       break;
     case RenderPosition.BEFOREEND:
-      container.append(element);
+      container.append(component.getElement());
       break;
   }
+};
+
+export const append = (parent, element) => {
+  parent.appendChild(element);
+};
+
+export const remove = (component) => {
+  component.getElement().remove();
+  component.removeElement();
 };
