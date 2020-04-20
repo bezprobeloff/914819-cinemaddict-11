@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import AbstractComponent from "../components/abstract-component";
 
 const createFooterStatistics = (sumFilms) => {
   return (
@@ -6,26 +6,13 @@ const createFooterStatistics = (sumFilms) => {
   );
 };
 
-export default class FooterStats {
+export default class FooterStats extends AbstractComponent {
   constructor(sumFilms) {
+    super();
     this._sumFilms = sumFilms;
-
-    this._element = null;
   }
 
   getTemplate() {
     return createFooterStatistics(this._sumFilms);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

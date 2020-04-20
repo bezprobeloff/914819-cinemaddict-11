@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import AbstractComponent from "../components/abstract-component";
 
 const CONTROLS = [
   `watchlist`,
@@ -157,26 +157,25 @@ const createFilmDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmPopup {
+export default class FilmPopup extends AbstractComponent {
   constructor(film) {
+    super();
     this._film = film;
-
-    this._element = null;
   }
 
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  // удалим только разметку, сам элемент не будем обнулять
+  removePopup() {
+    this.getElement().parentElement
+    .removeChild(this.getElement());
   }
 
-  removeElement() {
-    this._element = null;
+  setClickHandler(handler) {
+    this.getElement()
+      .querySelector(`.film-details__close-btn`)
+      .addEventListener(`click`, handler);
   }
 }
