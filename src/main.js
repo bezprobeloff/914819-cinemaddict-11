@@ -9,7 +9,7 @@ import SectionFilmsComponent from "./components/section-films";
 import SortFilmsComponent from "./components/sort-films";
 import FooterStatsComponent from "./components/footer-statistics";
 import {generateFilms} from "./components/mock/film";
-import {render, RenderPosition} from "./utils.js";
+import {render, RenderPosition} from "./utils/render";
 
 const FILMS_COUNT = 23;
 const SHOWING_FILMS_ON_START_COUNT = 5;
