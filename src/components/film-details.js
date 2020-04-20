@@ -166,4 +166,16 @@ export default class FilmPopup extends AbstractComponent {
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
   }
+
+  // удалим только разметку, сам элемент не будем обнулять
+  removePopup() {
+    this.getElement().parentElement
+    .removeChild(this.getElement());
+  }
+
+  setClickHandler(handler) {
+    this.getElement()
+      .querySelector(`.film-details__close-btn`)
+      .addEventListener(`click`, handler);
+  }
 }
