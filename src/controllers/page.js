@@ -42,6 +42,8 @@ export default class PageController {
   constructor(container) {
     this._container = container;
 
+    this._films = [];
+    this._showingFilmsCount = SHOWING_FILMS_ON_START_COUNT;
     this._noFilmsComponent = new NoFilmsComponent();
     this._sortFilmsComponent = new SortFilmsComponent();
     this._sectionFilmsComponent = new SectionFilmsComponent();
@@ -49,9 +51,13 @@ export default class PageController {
     this._filmsListComponent = new FilmListComponent(`All movies. Upcoming`, ``);
     this._filmListExtraTopRateComponent = new FilmListComponent(`Top rated movies`, `extra`);
     this._filmListExtraMostCommentComponent = new FilmListComponent(`Most commented`, `extra`);
+
+    this._onSortTypeChange = this._onSortTypeChange.bind(this);
+    this._sortFilmsComponent.setSortTypeChangeHandler(this._onSortTypeChange);
   }
 
   render(films) {
+    this._films = films;
 
     render(this._container, this._sortFilmsComponent, RenderPosition.BEFOREEND);
     render(this._container, this._sectionFilmsComponent, RenderPosition.BEFOREEND);
@@ -69,11 +75,11 @@ export default class PageController {
 
     render(this._sectionFilmsComponent.getElement(), this._filmsListComponent, RenderPosition.BEFOREEND);
 
-    let showingFilmsCount = SHOWING_FILMS_ON_START_COUNT;
+    //let showingFilmsCount = SHOWING_FILMS_ON_START_COUNT;
 
-    renderFilms(filmsListContainerElement, films.slice(0, showingFilmsCount));
+    renderFilms(filmsListContainerElement, films.slice(0, this._showingFilmsCount));
 
-    renderShowMoreButton();
+    this._renderShowMoreButton();
     //здесь вызывали функцию сортировку
     //this._sortFilmsComponent.setSortTypeChangeHandler((sortType) => {
 
@@ -82,39 +88,46 @@ export default class PageController {
 
     // генерация карточек для доп блоков
     for (let i = 0; i < FILMS_EXTRA_COUNT; i++) {
-      renderCardFilm(filmsListTopRatedContainerElement, films[i]);
-      renderCardFilm(filmsListMostCommentContainerElement, films[i + 2]);
+      //renderCardFilm(filmsListTopRatedContainerElement, films[i]);
+      //renderCardFilm(filmsListMostCommentContainerElement, films[i + 2]);
     }
   }
 
   _renderShowMoreButton() {
-    if (showingFilmsCount >= films.length) {
+    if (this._showingFilmsCount >= this.films.length) {
       return;
     }
-    render(this._filmsListComponent.getElement(), this._showMoreButtonComponent, RenderPosition.BEFOREEND);
+
+    const filmListElement = this._filmsListComponent.getElement();
+    render(filmListElement, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
+
     this._showMoreButtonComponent.setClickHandler(() => {
-      const prevTasksCount = showingFilmsCount;
-      showingFilmsCount = showingFilmsCount + SHOWING_FILMS_BY_BUTTON_COUNT;
+      const prevTasksCount = this._showingFilmsCount;
+      const filmsListContainerElement = this._filmsListComponent.getElement().querySelector(`.films-list__container`);
 
-      const sortedFilms = getSortedFilms(films, this._sortFilmsComponent.getSortType(), prevTasksCount, showingFilmsCount);
+      this._showingFilmsCount = this._showingFilmsCount + SHOWING_FILMS_BY_BUTTON_COUNT;
 
-      renderFilms(filmsListContainerElement, sortedFilms);
+      //const sortedFilms = getSortedFilms(this._films, this._sortFilmsComponent.getSortType(), prevTasksCount, showingFilmsCount);
 
-      if (showingFilmsCount >= films.length) {
+      //renderFilms(filmsListContainerElement, sortedFilms);
+      renderFilms(filmsListContainerElement, sortedFilms.slice(0, this._showingFilmsCount));
+
+      if (this._showingFilmsCount >= this._films.length) {
         remove(this._showMoreButtonComponent);
       }
     });
   }
 
   _onSortTypeChange(sortType) {
-    showingFilmsCount = SHOWING_FILMS_BY_BUTTON_COUNT;
-    const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
+    this._showingFilmsCount = SHOWING_FILMS_BY_BUTTON_COUNT;
+    const sortedFilms = getSortedFilms(this._films, sortType, 0, this._showingFilmsCount);
+    const filmsListContainerElement = this._filmsListComponent.getElement().querySelector(`.films-list__container`);
 
     filmsListContainerElement.innerHTML = ``;
 
     renderFilms(filmsListContainerElement, sortedFilms);
 
-    renderShowMoreButton();
+    this._renderShowMoreButton();
   }
 
 }
