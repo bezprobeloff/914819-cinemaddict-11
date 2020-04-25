@@ -6,39 +6,12 @@ import FilmPopupComponent from "../components/film-details";
 import FilmListComponent from "../components/film-list";
 import SectionFilmsComponent from "../components/section-films";
 import SortFilmsComponent, {SortType} from "../components/sort-films";
+import MovieController from "../controllers/movie";
 import {render, append, remove, RenderPosition} from "../utils/render";
 
 const SHOWING_FILMS_ON_START_COUNT = 5;
 const SHOWING_FILMS_BY_BUTTON_COUNT = 5;
 const FILMS_EXTRA_COUNT = 2;
-
-const renderCardFilm = (filmListContainer, film) => {
-  const onOpenPopupClick = () => {
-    const bodyElement = document.querySelector(`body`);
-    append(bodyElement, popupFilmComponent);
-    document.addEventListener(`keydown`, onEscKeyDown);
-  };
-
-  const closePopup = () => {
-    popupFilmComponent.removePopup();
-  };
-
-  const onEscKeyDown = (evt) => {
-    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
-    if (isEscKey) {
-      closePopup();
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    }
-  };
-  const cardFilmComponent = new CardFilmComponent(film);
-  const popupFilmComponent = new FilmPopupComponent(film);
-
-  cardFilmComponent.setClickHandler(onOpenPopupClick);
-  popupFilmComponent.setClickHandler(closePopup);
-
-  render(filmListContainer, cardFilmComponent, RenderPosition.BEFOREEND);
-};
 
 const renderFilms = (filmListContainer, films) => {
   films.forEach((film) => {
