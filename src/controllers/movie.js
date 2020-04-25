@@ -10,26 +10,29 @@ export default class MovieController {
     this._filmPopupComponent = null;
 
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
+    this._onOpenPopupClick = this._onOpenPopupClick.bind(this);
+    //append.bind(this._filmPopupComponent);
   }
 
   render(film) {
     this._cardFilmComponent = new CardFilmComponent(film);
-    this._popupFilmComponent = new FilmPopupComponent(film);
+    this._filmPopupComponent = new FilmPopupComponent(film);
 
     this._cardFilmComponent.setClickHandler(this._onOpenPopupClick);
-    this._popupFilmComponent.setClickHandler(this._closePopup);
+    this._filmPopupComponent.setClickHandler(this._closePopup);
 
     render(this._container, this._cardFilmComponent, RenderPosition.BEFOREEND);
   }
 
   _onOpenPopupClick() {
     const bodyElement = document.querySelector(`body`);
-    append(bodyElement, this._popupFilmComponent);
+    //Console.log(this._filmPopupComponent.get);
+    append(bodyElement, this._filmPopupComponent);
     document.addEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _closePopup() {
-    this._popupFilmComponent.removePopup();
+    this._filmPopupComponent.removePopup();
   }
 
   _onEscKeyDown(evt) {
