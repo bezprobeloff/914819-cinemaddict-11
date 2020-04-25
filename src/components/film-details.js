@@ -1,10 +1,10 @@
 import AbstractComponent from "../components/abstract-component";
 
-const CONTROLS = [
-  `watchlist`,
-  `watched`,
-  `favorite`
-];
+const Controls = {
+  "watchlist": `Add to watchlist`,
+  "watched": `Already watched`,
+  "favorite": `Add to favorites`
+};
 
 const EMOJIS = [
   `./images/emoji/smile.png`,
@@ -32,17 +32,10 @@ const createDetailsMarkup = (term, cell) => {
 };
 
 const createControlsMarkup = (name) => {
-  let labeltext = `Add to ${name}`;
-  if (name === `watched`) {
-    labeltext = `Already ${name}`;
-  } else if (name === `favorite`) {
-    labeltext = labeltext + `s`;
-  }
-
   return (
     `
     <input type="checkbox" class="film-details__control-input visually-hidden" id="${name}" name="${name}">
-    <label for="${name}" class="film-details__control-label film-details__control-label--${name}">${labeltext}</label>
+    <label for="${name}" class="film-details__control-label film-details__control-label--${name}">${Controls[name]}</label>
     `
   );
 };
@@ -127,7 +120,9 @@ const createFilmDetailsTemplate = (film) => {
           </div>
 
           <section class="film-details__controls">
-            ${CONTROLS.map((item) => createControlsMarkup(item)).join(`\n`)}
+            ${createControlsMarkup(`watchlist`)}
+            ${createControlsMarkup(`watched`)}
+            ${createControlsMarkup(`favorite`)}
           </section>
         </div>
 
