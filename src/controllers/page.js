@@ -52,24 +52,6 @@ export default class PageController {
   }
 
   render(films) {
-    const renderShowMoreButton = () => {
-      if (showingFilmsCount >= films.length) {
-        return;
-      }
-      render(this._filmsListComponent.getElement(), this._showMoreButtonComponent, RenderPosition.BEFOREEND);
-      this._showMoreButtonComponent.setClickHandler(() => {
-        const prevTasksCount = showingFilmsCount;
-        showingFilmsCount = showingFilmsCount + SHOWING_FILMS_BY_BUTTON_COUNT;
-
-        const sortedFilms = getSortedFilms(films, this._sortFilmsComponent.getSortType(), prevTasksCount, showingFilmsCount);
-
-        renderFilms(filmsListContainerElement, sortedFilms);
-
-        if (showingFilmsCount >= films.length) {
-          remove(this._showMoreButtonComponent);
-        }
-      });
-    };
 
     render(this._container, this._sortFilmsComponent, RenderPosition.BEFOREEND);
     render(this._container, this._sectionFilmsComponent, RenderPosition.BEFOREEND);
@@ -92,16 +74,8 @@ export default class PageController {
     renderFilms(filmsListContainerElement, films.slice(0, showingFilmsCount));
 
     renderShowMoreButton();
-    this._sortFilmsComponent.setSortTypeChangeHandler((sortType) => {
-      showingFilmsCount = SHOWING_FILMS_BY_BUTTON_COUNT;
-      const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
-
-      filmsListContainerElement.innerHTML = ``;
-
-      renderFilms(filmsListContainerElement, sortedFilms);
-
-      renderShowMoreButton();
-    });
+    //здесь вызывали функцию сортировку
+    //this._sortFilmsComponent.setSortTypeChangeHandler((sortType) => {
 
     render(this._sectionFilmsComponent.getElement(), this._filmListExtraTopRateComponent, RenderPosition.BEFOREEND);
     render(this._sectionFilmsComponent.getElement(), this._filmListExtraMostCommentComponent, RenderPosition.BEFOREEND);
@@ -111,6 +85,36 @@ export default class PageController {
       renderCardFilm(filmsListTopRatedContainerElement, films[i]);
       renderCardFilm(filmsListMostCommentContainerElement, films[i + 2]);
     }
+  }
+
+  _renderShowMoreButton() {
+    if (showingFilmsCount >= films.length) {
+      return;
+    }
+    render(this._filmsListComponent.getElement(), this._showMoreButtonComponent, RenderPosition.BEFOREEND);
+    this._showMoreButtonComponent.setClickHandler(() => {
+      const prevTasksCount = showingFilmsCount;
+      showingFilmsCount = showingFilmsCount + SHOWING_FILMS_BY_BUTTON_COUNT;
+
+      const sortedFilms = getSortedFilms(films, this._sortFilmsComponent.getSortType(), prevTasksCount, showingFilmsCount);
+
+      renderFilms(filmsListContainerElement, sortedFilms);
+
+      if (showingFilmsCount >= films.length) {
+        remove(this._showMoreButtonComponent);
+      }
+    });
+  }
+
+  _onSortTypeChange(sortType) {
+    showingFilmsCount = SHOWING_FILMS_BY_BUTTON_COUNT;
+    const sortedFilms = getSortedFilms(films, sortType, 0, showingFilmsCount);
+
+    filmsListContainerElement.innerHTML = ``;
+
+    renderFilms(filmsListContainerElement, sortedFilms);
+
+    renderShowMoreButton();
   }
 
 }
