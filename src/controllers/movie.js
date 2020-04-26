@@ -21,7 +21,7 @@ export default class MovieController {
     this._filmPopupComponent = new FilmPopupComponent(film);
 
     this._cardFilmComponent.setClickHandler(this._onOpenPopupClick);
-    this._filmPopupComponent.setClickHandler(this._closePopup);
+    this._filmPopupComponent.setCloseButtonClickHandler(this._closePopup);
 
     this._cardFilmComponent.setWashlistButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
@@ -57,6 +57,8 @@ export default class MovieController {
 
   _closePopup() {
     this._filmPopupComponent.removePopup();
+    //this._filmPopupComponent.removeElement();
+    //this._filmPopupComponent.removeElement();
   }
 
   _onEscKeyDown(evt) {

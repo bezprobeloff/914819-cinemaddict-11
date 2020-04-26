@@ -1,4 +1,5 @@
-import AbstractComponent from "../components/abstract-component";
+import AbstractSmartComponent from "../components/abstract-smart-component";
+import { createElement } from "../utils/render";
 
 const Controls = {
   "watchlist": `Add to watchlist`,
@@ -152,14 +153,26 @@ const createFilmDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmPopup extends AbstractComponent {
+export default class FilmPopup extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
+    this.removePopup.bind(this);
+
+    this._closeButtonClickHandler = null;
   }
 
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
+  }
+
+  recoveryListeners() {
+    this.setCloseButtonClickHandler(this._closeButtonClickHandler);
+    this._subscribeOnEvents();
+  }
+
+  rerender() {
+    super.rerender();
   }
 
   // удалим только разметку, сам элемент не будем обнулять
@@ -168,9 +181,67 @@ export default class FilmPopup extends AbstractComponent {
     .removeChild(this.getElement());
   }
 
-  setClickHandler(handler) {
+  setCloseButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
+
+    this._closeButtonClickHandler = handler;
+    this._subscribeOnEvents();
+  }
+
+  _subscribeOnEvents() {
+    const element = this.getElement();
+    const emojieLabelList = Array.from(element.querySelectorAll(`.film-details__new-comment .film-details__emoji-label`));
+    const addEmojiElement = element.querySelector(`.film-details__add-emoji-label`);
+
+
+    //попытка реализовать отображение эмоции при выборе эмоции
+    let emoji = `smile`;
+    const test = `<img src="images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">`;
+    emojieLabelList.forEach((item) => {
+      item.addEventListener(`click`, () => {
+        emoji = item.getAttribute(`for`).replace(`emoji-`, ``);
+
+        addEmojiElement.appendChild(createElement(test));
+
+        //this.rerender();
+      });
+    });
+
+    element.querySelector(`.film-details__control-label--watchlist`)
+      .addEventListener(`click`, () => {
+        //this._isDateShowing = !this._isDateShowing;
+
+        this.rerender();
+      });
+
+
+    element.querySelector(`.film-details__control-label--watched`)
+      .addEventListener(`click`, () => {
+        //this._isRepeatingTask = !this._isRepeatingTask;
+
+        this.rerender();
+      });
+
+    element.querySelector(`.film-details__control-label--favorite`)
+    .addEventListener(`click`, () => {
+      //this._isRepeatingTask = !this._isRepeatingTask;
+
+      this.rerender();
+    });
+
+    //element.querySelector(`.film-details__new-comment .film-details__emoji-label`);
+
+    /*
+    const repeatDays = element.querySelector(`.card__repeat-days`);
+    if (repeatDays) {
+      repeatDays.addEventListener(`change`, (evt) => {
+        this._activeRepeatingDays[evt.target.value] = evt.target.checked;
+
+        this.rerender();
+      });
+    }
+    */
   }
 }
