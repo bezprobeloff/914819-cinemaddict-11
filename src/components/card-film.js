@@ -6,10 +6,11 @@ const Controls = {
   "favorite": `Mark as favorite`
 };
 
-const createButtonMarkup = (type) => {
+const createButtonMarkup = (type, isActive = false) => {
+  const classItem = `film-card__controls-item`;
   return (
     `<button
-      class="film-card__controls-item button film-card__controls-item--${type}"
+      class="${classItem} button ${classItem}--${type} ${isActive ? classItem + `--active` : ``}"
       >
         ${Controls[type]}
     </button>`
@@ -17,10 +18,12 @@ const createButtonMarkup = (type) => {
 };
 
 const createCardFilmTemplate = (film) => {
-  const {title, rate, year, duration, genres, poster, description, comments} = film;
-  const washlistButton = createButtonMarkup(`add-to-watchlist`);
-  const watchedButton = createButtonMarkup(`mark-as-watched`);
-  const favoriteButton = createButtonMarkup(`favorite`);
+  const {title, rate, year, duration, genres, poster, description,
+    isWached, isWatchlist, isFavorite, comments} = film;
+
+  const washlistButton = createButtonMarkup(`add-to-watchlist`, isWatchlist);
+  const watchedButton = createButtonMarkup(`mark-as-watched`, isWached);
+  const favoriteButton = createButtonMarkup(`favorite`, isFavorite);
 
   return (
     `<article class="film-card">
@@ -61,5 +64,20 @@ export default class CardFilm extends AbstractComponent {
     posterCardFilmElement.addEventListener(`click`, handler);
     titleCardFilmElement.addEventListener(`click`, handler);
     commentsCardFilmElement.addEventListener(`click`, handler);
+  }
+
+  setWashlistButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+      .addEventListener(`click`, handler);
+  }
+
+  setWatchedButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
+      .addEventListener(`click`, handler);
+  }
+
+  setFavoriteButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--favorite`)
+      .addEventListener(`click`, handler);
   }
 }

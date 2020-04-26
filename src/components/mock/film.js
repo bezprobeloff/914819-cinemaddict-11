@@ -120,7 +120,7 @@ const generateFilm = () => {
     country: getElement(Country),
     comments: getGenerateArrObjects(generateComments),
     isWached: getRandomNumber(0, 1),
-    isHistory: getRandomNumber(0, 1),
+    isWatchlist: getRandomNumber(0, 1),
     isFavorite: getRandomNumber(0, 1)
   };
 };
