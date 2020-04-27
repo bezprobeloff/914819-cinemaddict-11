@@ -3,9 +3,10 @@ import FilmPopupComponent from "../components/film-details";
 import {render, append, remove, RenderPosition} from "../utils/render";
 
 export default class MovieController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
 
     this._cardFilmComponent = null;
     this._filmPopupComponent = null;
@@ -17,6 +18,11 @@ export default class MovieController {
   }
 
   render(film) {
+    // попытка реализовать скрытие всех попапов лишни
+    const oldFilmComponent = this._cardFilmComponent;
+    const oldFilmPopupComponent = this._filmPopupComponent;
+    //
+
     this._cardFilmComponent = new CardFilmComponent(film);
     this._filmPopupComponent = new FilmPopupComponent(film);
 
@@ -46,6 +52,10 @@ export default class MovieController {
     });
 
     render(this._container, this._cardFilmComponent, RenderPosition.BEFOREEND);
+  }
+
+  setDefaultView() {
+
   }
 
   _onOpenPopupClick() {
