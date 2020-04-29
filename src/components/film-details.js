@@ -181,6 +181,14 @@ export default class FilmPopup extends AbstractSmartComponent {
     .removeChild(this.getElement());
   }
 
+  //здесь мы сохраним после закрытия попапа предыдущее состояние
+  //чтобы мы могли открыть повторно попап бещ потери данных
+  reset() {
+    //здесь будет код который присвоит обратно исходное состояние
+
+    this.rerender();
+  }
+
   setCloseButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__close-btn`)
