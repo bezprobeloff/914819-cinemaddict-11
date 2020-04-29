@@ -1,8 +1,8 @@
 
 import ShowMoreButtonComponent from "../components/button-show-more";
 import NoFilmsComponent from "../components/no-films";
-import CardFilmComponent from "../components/card-film";
-import FilmPopupComponent from "../components/film-details";
+// import CardFilmComponent from "../components/card-film";
+// import FilmPopupComponent from "../components/film-details";
 import FilmListComponent from "../components/film-list";
 import SectionFilmsComponent from "../components/section-films";
 import SortFilmsComponent, {SortType} from "../components/sort-films";
@@ -80,8 +80,8 @@ export default class PageController {
     }
 
     const filmsListContainerElement = this._filmsListComponent.getElement().querySelector(`.films-list__container`);
-    const filmsListTopRatedContainerElement = this._filmListExtraTopRateComponent.getElement().querySelector(`.films-list__container`);
-    const filmsListMostCommentContainerElement = this._filmListExtraMostCommentComponent.getElement().querySelector(`.films-list__container`);
+    // const filmsListTopRatedContainerElement = this._filmListExtraTopRateComponent.getElement().querySelector(`.films-list__container`);
+    // const filmsListMostCommentContainerElement = this._filmListExtraMostCommentComponent.getElement().querySelector(`.films-list__container`);
 
     render(this._sectionFilmsComponent.getElement(), this._filmsListComponent, RenderPosition.BEFOREEND);
 
@@ -95,8 +95,8 @@ export default class PageController {
 
     // генерация карточек для доп блоков
     for (let i = 0; i < FILMS_EXTRA_COUNT; i++) {
-      //renderCardFilm(filmsListTopRatedContainerElement, films[i]);
-      //renderCardFilm(filmsListMostCommentContainerElement, films[i + 2]);
+      // renderCardFilm(filmsListTopRatedContainerElement, films[i]);
+      // renderCardFilm(filmsListMostCommentContainerElement, films[i + 2]);
     }
   }
 
