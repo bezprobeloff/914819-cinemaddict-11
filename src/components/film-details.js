@@ -1,5 +1,5 @@
 import AbstractSmartComponent from "../components/abstract-smart-component";
-import { createElement } from "../utils/render";
+import {createElement} from "../utils/render";
 
 const Controls = {
   "watchlist": `Add to watchlist`,
@@ -75,7 +75,7 @@ const createEmojiMarkup = (emojiPath) => {
 };
 
 const createFilmDetailsTemplate = (film) => {
-  const {title, rate, year, duration, genres, poster, description,
+  const {title, rate, duration, genres, poster, description,
     ageRate, titleOriginal, director, writers, actors,
     releaseDate, country, comments} = film;
   return (
@@ -181,10 +181,10 @@ export default class FilmPopup extends AbstractSmartComponent {
     .removeChild(this.getElement());
   }
 
-  //здесь мы сохраним после закрытия попапа предыдущее состояние
-  //чтобы мы могли открыть повторно попап бещ потери данных
+  // здесь мы сохраним после закрытия попапа предыдущее состояние
+  // чтобы мы могли открыть повторно попап бещ потери данных
   reset() {
-    //здесь будет код который присвоит обратно исходное состояние
+    // здесь будет код который присвоит обратно исходное состояние
 
     this.rerender();
   }
@@ -204,7 +204,7 @@ export default class FilmPopup extends AbstractSmartComponent {
     const addEmojiElement = element.querySelector(`.film-details__add-emoji-label`);
 
 
-    //попытка реализовать отображение эмоции при выборе эмоции
+    // попытка реализовать отображение эмоции при выборе эмоции
     let emoji = `smile`;
     const test = `<img src="images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">`;
     emojieLabelList.forEach((item) => {
@@ -213,13 +213,13 @@ export default class FilmPopup extends AbstractSmartComponent {
 
         addEmojiElement.appendChild(createElement(test));
 
-        //this.rerender();
+        // this.rerender();
       });
     });
 
     element.querySelector(`.film-details__control-label--watchlist`)
       .addEventListener(`click`, () => {
-        //this._isDateShowing = !this._isDateShowing;
+        // this._isDateShowing = !this._isDateShowing;
 
         this.rerender();
       });
@@ -227,19 +227,19 @@ export default class FilmPopup extends AbstractSmartComponent {
 
     element.querySelector(`.film-details__control-label--watched`)
       .addEventListener(`click`, () => {
-        //this._isRepeatingTask = !this._isRepeatingTask;
+        // this._isRepeatingTask = !this._isRepeatingTask;
 
         this.rerender();
       });
 
     element.querySelector(`.film-details__control-label--favorite`)
     .addEventListener(`click`, () => {
-      //this._isRepeatingTask = !this._isRepeatingTask;
+      // this._isRepeatingTask = !this._isRepeatingTask;
 
       this.rerender();
     });
 
-    //element.querySelector(`.film-details__new-comment .film-details__emoji-label`);
+    // element.querySelector(`.film-details__new-comment .film-details__emoji-label`);
 
     /*
     const repeatDays = element.querySelector(`.card__repeat-days`);
