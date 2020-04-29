@@ -1,10 +1,11 @@
-import AbstractComponent from "../components/abstract-component";
+import AbstractSmartComponent from "../components/abstract-smart-component";
+import { createElement } from "../utils/render";
 
-const CONTROLS = [
-  `watchlist`,
-  `watched`,
-  `favorite`
-];
+const Controls = {
+  "watchlist": `Add to watchlist`,
+  "watched": `Already watched`,
+  "favorite": `Add to favorites`
+};
 
 const EMOJIS = [
   `./images/emoji/smile.png`,
@@ -32,17 +33,10 @@ const createDetailsMarkup = (term, cell) => {
 };
 
 const createControlsMarkup = (name) => {
-  let labeltext = `Add to ${name}`;
-  if (name === `watched`) {
-    labeltext = `Already ${name}`;
-  } else if (name === `favorite`) {
-    labeltext = labeltext + `s`;
-  }
-
   return (
     `
     <input type="checkbox" class="film-details__control-input visually-hidden" id="${name}" name="${name}">
-    <label for="${name}" class="film-details__control-label film-details__control-label--${name}">${labeltext}</label>
+    <label for="${name}" class="film-details__control-label film-details__control-label--${name}">${Controls[name]}</label>
     `
   );
 };
@@ -127,7 +121,9 @@ const createFilmDetailsTemplate = (film) => {
           </div>
 
           <section class="film-details__controls">
-            ${CONTROLS.map((item) => createControlsMarkup(item)).join(`\n`)}
+            ${createControlsMarkup(`watchlist`)}
+            ${createControlsMarkup(`watched`)}
+            ${createControlsMarkup(`favorite`)}
           </section>
         </div>
 
@@ -157,14 +153,26 @@ const createFilmDetailsTemplate = (film) => {
   );
 };
 
-export default class FilmPopup extends AbstractComponent {
+export default class FilmPopup extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
+    this.removePopup.bind(this);
+
+    this._closeButtonClickHandler = null;
   }
 
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
+  }
+
+  recoveryListeners() {
+    this.setCloseButtonClickHandler(this._closeButtonClickHandler);
+    this._subscribeOnEvents();
+  }
+
+  rerender() {
+    super.rerender();
   }
 
   // удалим только разметку, сам элемент не будем обнулять
@@ -173,9 +181,75 @@ export default class FilmPopup extends AbstractComponent {
     .removeChild(this.getElement());
   }
 
-  setClickHandler(handler) {
+  //здесь мы сохраним после закрытия попапа предыдущее состояние
+  //чтобы мы могли открыть повторно попап бещ потери данных
+  reset() {
+    //здесь будет код который присвоит обратно исходное состояние
+
+    this.rerender();
+  }
+
+  setCloseButtonClickHandler(handler) {
     this.getElement()
       .querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
+
+    this._closeButtonClickHandler = handler;
+    this._subscribeOnEvents();
+  }
+
+  _subscribeOnEvents() {
+    const element = this.getElement();
+    const emojieLabelList = Array.from(element.querySelectorAll(`.film-details__new-comment .film-details__emoji-label`));
+    const addEmojiElement = element.querySelector(`.film-details__add-emoji-label`);
+
+
+    //попытка реализовать отображение эмоции при выборе эмоции
+    let emoji = `smile`;
+    const test = `<img src="images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">`;
+    emojieLabelList.forEach((item) => {
+      item.addEventListener(`click`, () => {
+        emoji = item.getAttribute(`for`).replace(`emoji-`, ``);
+
+        addEmojiElement.appendChild(createElement(test));
+
+        //this.rerender();
+      });
+    });
+
+    element.querySelector(`.film-details__control-label--watchlist`)
+      .addEventListener(`click`, () => {
+        //this._isDateShowing = !this._isDateShowing;
+
+        this.rerender();
+      });
+
+
+    element.querySelector(`.film-details__control-label--watched`)
+      .addEventListener(`click`, () => {
+        //this._isRepeatingTask = !this._isRepeatingTask;
+
+        this.rerender();
+      });
+
+    element.querySelector(`.film-details__control-label--favorite`)
+    .addEventListener(`click`, () => {
+      //this._isRepeatingTask = !this._isRepeatingTask;
+
+      this.rerender();
+    });
+
+    //element.querySelector(`.film-details__new-comment .film-details__emoji-label`);
+
+    /*
+    const repeatDays = element.querySelector(`.card__repeat-days`);
+    if (repeatDays) {
+      repeatDays.addEventListener(`change`, (evt) => {
+        this._activeRepeatingDays[evt.target.value] = evt.target.checked;
+
+        this.rerender();
+      });
+    }
+    */
   }
 }
