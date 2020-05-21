@@ -1,6 +1,6 @@
 export const FilterType = {
-  ALL: `all`,
-  WATCHLIST: `watchlist`,
-  FAVORITES: `favorites`,
-  HISTORY: `history`,
+  ALL: `All movies`,
+  WATCHLIST: `Watchlist`,
+  FAVORITES: `Favorites`,
+  HISTORY: `History`,
 };

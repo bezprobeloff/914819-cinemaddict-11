@@ -14,7 +14,7 @@ export default class FilterController {
     this._onDataChange = this._onDataChange.bind(this);
     this._onFilterChange = this._onFilterChange.bind(this);
 
-    this._filmsModel.setDataChangeHandler(this._onDataChange);
+    this._filmsModel.setDataChandeHandler(this._onDataChange);
   }
 
   render() {
@@ -42,7 +42,7 @@ export default class FilterController {
 
 
   _onFilterChange(filterType) {
-    this._tasksModel.setFilter(filterType);
+    this._filmsModel.setFilter(filterType);
     this._activeFilterType = filterType;
   }
 

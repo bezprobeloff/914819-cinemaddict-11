@@ -76,6 +76,12 @@ export default class MovieController {
     this._popupState = PopupState.OPEN;
   }
 
+  destroy() {
+    remove(this._cardFilmComponent);
+    remove(this._filmPopupComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
+  }
+
   _closePopup() {
     this._filmPopupComponent.reset();
     this._filmPopupComponent.removePopup();

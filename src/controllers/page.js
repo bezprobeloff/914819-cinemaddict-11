@@ -63,8 +63,10 @@ export default class PageController {
 
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
+    this._onFilterChange = this._onFilterChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._sortFilmsComponent.setSortTypeChangeHandler(this._onSortTypeChange);
+    this._filmsModel.setFilterChangeHandler(this._onFilterChange);
   }
 
   //render(films) {
@@ -85,6 +87,11 @@ export default class PageController {
     this._renderFilms(films.slice(0, this._showingFilmsCount));
 
     this._renderShowMoreButton();
+  }
+
+  _removeFilms() {
+    this._showedMovieControllers.forEach((movieContoller) => movieContoller.destroy());
+    this._showedMovieControllers = [];
   }
 
   _renderFilms(films) {
@@ -146,6 +153,16 @@ export default class PageController {
       }
       */
     });
+  }
+
+  _updateFilms(count) {
+    this._removeFilms();
+    this._renderFilms(this._filmsModel.getFilms().slice(0, count));
+    this._renderShowMoreButton();
+  }
+
+  _onFilterChange() {
+    this._updateFilms(SHOWING_FILMS_ON_START_COUNT);
   }
 
   _onViewChange() {

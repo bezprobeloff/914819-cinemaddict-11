@@ -11,8 +11,10 @@ const createFilterMarkup = (filter, isChecked) => {
   const classNameFilter = `main-navigation__item`;
 
   return (
-    `<a href="#watchlist" class="${classNameFilter} ${isChecked ? `${classNameFilter + `--active`}` : ``}">${name}
-      <span class="${classNameFilter}-count">${count}</span>
+    `<a href="#watchlist"
+      id="filter__${name}"
+      class="${classNameFilter} ${isChecked ? `${classNameFilter + `--active`}` : ``}">${name}
+      ${name !== `All movies` ? `<span class="${classNameFilter}-count">${count}</span>` : ``}
     </a>`
   );
 };
@@ -21,9 +23,15 @@ const createFilterTemplate = (filters) => {
   const filtersMarkup = filters.map((it) => createFilterMarkup(it, it.checked)).join(`\n`);
 
   return (
-    `<div class="main-navigation__items">
-      ${filtersMarkup}
-    </div>`
+    `<nav class="main-navigation">
+      <div class="main-navigation__items">
+        ${filtersMarkup}
+      </div>
+      <a href="#stats" class="main-navigation__additional">Stats</a>
+    </nav>`
+    //`<div class="main-navigation__items">
+    //  ${filtersMarkup}
+    //</div>`
   );
 };
 
@@ -64,7 +72,7 @@ export default class Filter extends AbstractComponent {
   }
 
   setFilterChangeHandler(handler) {
-    this.getElement().addEventListener(`change`, (evt) => {
+    this.getElement().addEventListener(`click`, (evt) => {
       const filterName = getFilterNameById(evt.target.id);
       handler(filterName);
     });
