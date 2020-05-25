@@ -104,6 +104,7 @@ const generateComments = () => {
 
 const generateFilm = () => {
   return {
+    id: String(new Date() + Math.random()),
     title: getElement(Titles),
     rate: getRandomNumber(0, 10),
     year: getElement(Years),
