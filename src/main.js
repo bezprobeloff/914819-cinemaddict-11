@@ -3,6 +3,7 @@ import ProfileComponent from "./components/profile";
 import FooterStatsComponent from "./components/footer-statistics";
 import MainNavigationComponent from "./components/main-navigate";
 //import FilterComponent from "./components/filter";
+import StatisticsComponent from "./components/statistics.js";
 import FilterController from "./controllers/filter";
 import FilmsModel from "./models/movies";
 import {generateFilms} from "./components/mock/film";
@@ -22,6 +23,8 @@ const profileComponent = new ProfileComponent(COUNT_WATCHED_FILMS);
 const footerStatsComponent = new FooterStatsComponent(films.length);
 const pageController = new PageController(siteMainElement, filmsModel);
 const mainNavigationComponent = new MainNavigationComponent();
+const statisticsComponent = new StatisticsComponent();
+render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
 //const filterComponent = new FilterComponent(films);
 
 
